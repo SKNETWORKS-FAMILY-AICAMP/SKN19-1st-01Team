@@ -53,12 +53,9 @@ if connection.is_connected():
     CREATE TABLE IF NOT EXISTS EV_Manufacturer_FAQ (
         id INT AUTO_INCREMENT PRIMARY KEY,
         manufacturer_id INT NOT NULL,
-        section VARCHAR(255),
         question TEXT NOT NULL,
-        answer_text TEXT NOT NULL,
-        answer_html TEXT,
-        source_url VARCHAR(255),
-        captured_at DATETIME,
+        answer TEXT NOT NULL,
+        captured_at DATETIME NOT NULL,
         FOREIGN KEY (manufacturer_id) REFERENCES EV_Manufacturer(id)
     );
 

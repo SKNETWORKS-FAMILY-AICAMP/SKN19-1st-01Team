@@ -5,11 +5,13 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 URL = "https://www.kia.com/kr/vehicles/kia-ev/guide/faq"
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-OUT_PATH   = os.path.join(SCRIPT_DIR, "data", "kia_ev_faq_simple.json")
+OUT_PATH   = os.path.join(SCRIPT_DIR, "..", "datasets", "faq", "kia_ev_faq.json")
 
 
 def make_driver():
@@ -26,7 +28,15 @@ def main():
     driver = make_driver()
     try:
         driver.get(URL)
-        time.sleep(1.0)  # 간단 대기 (필요시 조정)
+        time.sleep(1.0)  # 간단 대기 (chevrolet_faq_scraper.py와 동일)
+
+        # 질문/답변 요소가 로드될 때까지 기다림
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "span.cmp-accordion__title"))
+        )
+        WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.faqinner__wrap"))
+        )
 
         # 고정 셀렉터로 질문/답변 수집
         q_elems = driver.find_elements(By.CSS_SELECTOR, "span.cmp-accordion__title")

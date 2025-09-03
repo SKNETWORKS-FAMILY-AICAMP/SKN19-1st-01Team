@@ -1,56 +1,100 @@
 # pages/99_🤔_faq.py
 import os
-import sys
+import json
 import streamlit as st
 
-# 프로젝트 루트 경로를 sys.path에 추가하여 scraper 모듈 임포트 가능하게
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if ROOT not in sys.path:
-    sys.path.insert(0, ROOT)
+st.set_page_config(page_title="Kia FAQ JSON 뷰어", layout="centered")
+st.title("기아 FAQ (JSON 로드) 뷰어")
+st.caption("사전에 scraper.py로 JSON을 생성해 두세요.")
 
-try:
-    from scraper import scrape_kia_faq_first_page
-except Exception as e:
-    st.error(f"'scraper' 모듈을 불러오지 못했습니다: {e}\n"
-             "프로젝트 루트에 scraper.py가 있는지, 파일명이 정확한지 확인해 주세요.")
-    st.stop()
+DEFAULT_JSON = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "kia_faq.json")
 
-
-st.set_page_config(page_title="Kia FAQ 뷰어", layout="centered")
-st.title("기아 FAQ (첫 페이지) 뷰어")
-st.caption("출처: 기아 고객지원 FAQ 페이지")
-
-# 옵션
-col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns([2,1])
 with col1:
-    max_items = st.number_input("가져올 질문 개수", min_value=1, max_value=50, value=20, step=1)
+    json_path = st.text_input("JSON 파일 경로", value=DEFAULT_JSON)
 with col2:
-    do_refresh = st.checkbox("강제 새로고침(캐시 무시)", value=False)
+    max_show = st.number_input("표시 개수 제한", min_value=1, max_value=200, value=50, step=1)
 
-# 캐시: 10분
-@st.cache_data(show_spinner=False, ttl=600)
-def _load_faqs(_max_items: int):
-    return scrape_kia_faq_first_page(max_items=_max_items)
+uploaded = st.file_uploader("또는 JSON 파일 업로드", type=["json"], accept_multiple_files=False)
 
-with st.spinner("FAQ를 불러오는 중입니다..."):
-    faqs = scrape_kia_faq_first_page(max_items=max_items) if do_refresh else _load_faqs(max_items)
+@st.cache_data(show_spinner=False)
+def _load_json_from_path(path: str):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-if not faqs:
-    st.error("FAQ를 불러오지 못했습니다. (사이트 구조 변경/네트워크/브라우저 실행 문제일 수 있어요)")
+def _load_data():
+    if uploaded is not None:
+        try:
+            return json.load(uploaded)
+        except Exception as e:
+            st.error(f"업로드 JSON 파싱 실패: {e}")
+            return []
+    else:
+        try:
+            return _load_json_from_path(json_path)
+        except FileNotFoundError:
+            st.warning("JSON 파일을 찾을 수 없습니다. 경로를 확인하거나 파일을 업로드하세요.")
+            return []
+        except Exception as e:
+            st.error(f"JSON 로드 실패: {e}")
+            return []
+
+data = _load_data()
+if not data:
     st.stop()
 
-st.success(f"총 {len(faqs)}개 로드 완료")
+st.success(f"총 {len(data)}개 항목 로드 완료")
 
 # 검색
-keyword = st.text_input("질문/답변 검색(선택):", "")
-filtered = [
-    f for f in faqs
-    if not keyword
-    or keyword.lower() in f["question"].lower()
-    or keyword.lower() in f["answer"].lower()
-]
+q = st.text_input("질문/답변에서 검색(선택):", "")
+if q:
+    q_low = q.lower()
+    data = [
+        item for item in data
+        if q_low in (item.get("question","").lower())
+        or q_low in (item.get("answer_text","").lower())
+        or q_low in (item.get("answer_html","").lower())
+    ]
 
-# 렌더
-for i, item in enumerate(filtered, 1):
-    with st.expander(f"{i}. {item['question']}"):
-        st.write(item["answer"] or "(내용 없음)")
+st.write(f"표시할 항목: {min(len(data), max_show)}개")
+
+# 렌더링 옵션
+show_link_list = st.checkbox("추출된 링크 목록도 별도로 표시", value=True)
+show_image_gallery = st.checkbox("추출된 이미지도 별도로 표시(HTML 렌더 외 추가)", value=False)
+
+for i, item in enumerate(data[:max_show], start=1):
+    question = item.get("question", "").strip()
+    with st.expander(f"{i}. {question}" if question else f"{i}. (제목 없음)"):
+        # 1) HTML 그대로 렌더 (링크/이미지 포함)
+        html = item.get("answer_html", "").strip()
+        if html:
+            st.markdown(html, unsafe_allow_html=True)
+        else:
+            # 백업으로 텍스트 표시
+            st.write(item.get("answer_text", "") or "(내용 없음)")
+
+        # 2) 옵션: 링크 목록
+        if show_link_list:
+            links = item.get("links", [])
+            if links:
+                st.markdown("**추출된 링크**")
+                for L in links:
+                    text = L.get("text") or L.get("href") or ""
+                    href = L.get("href") or ""
+                    if href:
+                        st.markdown(f"- [{text}]({href})")
+            else:
+                st.caption("추출된 링크 없음")
+
+        # 3) 옵션: 이미지 갤러리 (HTML 렌더 외 추가로)
+        if show_image_gallery:
+            imgs = item.get("images", [])
+            if imgs:
+                st.markdown("**추출된 이미지**")
+                for img in imgs:
+                    src = img.get("src")
+                    alt = img.get("alt") or ""
+                    if src:
+                        st.image(src, caption=alt, use_column_width=True)
+            else:
+                st.caption("추출된 이미지 없음")

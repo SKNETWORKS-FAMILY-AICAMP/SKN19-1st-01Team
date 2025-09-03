@@ -19,6 +19,8 @@ if connection.is_connected():
 
     USE ev_fire;
 
+    DROP TABLE IF EXISTS EV_Manufacturer_FAQ;
+
     CREATE TABLE IF NOT EXISTS EV_Manufacturer (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(100) UNIQUE NOT NULL
@@ -51,9 +53,12 @@ if connection.is_connected():
     CREATE TABLE IF NOT EXISTS EV_Manufacturer_FAQ (
         id INT AUTO_INCREMENT PRIMARY KEY,
         manufacturer_id INT NOT NULL,
+        section VARCHAR(255),
         question TEXT NOT NULL,
-        answer TEXT NOT NULL,
+        answer_text TEXT NOT NULL,
+        answer_html TEXT,
         source_url VARCHAR(255),
+        captured_at DATETIME,
         FOREIGN KEY (manufacturer_id) REFERENCES EV_Manufacturer(id)
     );
 
@@ -61,6 +66,8 @@ if connection.is_connected():
     CREATE USER IF NOT EXISTS 'ohgiraffers'@'localhost' IDENTIFIED BY 'ohgiraffers';
     GRANT ALL PRIVILEGES ON ev_fire.* TO 'ohgiraffers'@'localhost';
     FLUSH PRIVILEGES;
+
+    INSERT IGNORE INTO EV_Manufacturer (name) VALUES ('Kia');
     """
 
     # Execute each statement
@@ -75,6 +82,6 @@ if connection.is_connected():
     connection.close()
 
     if connection.is_closed():
-        print("MySQL 연결이 닫혔습니다! (root 계정)")
+        print("MySQL 연결이 닫혔습니다!")
 else:
-    print("MySQL 연결에 실패했습니다! (root 계정)")
+    print("MySQL 연결에 실패했습니다!")

@@ -1,0 +1,4 @@
+year,non_ev_cumulative,total_vehicles,sources,total_source_url,ev_source_url,notes
+2021,24678557,24910000,총계: MOLIT 보도자료 / EV: 국회도서관 Data&Law,https://www.molit.go.kr/USR/NEWS/m_71/dtl.jsp?id=95086498&lcmspage=1,https://argos.nanet.go.kr/lawstat/arc/attach/112495?view=1,연말 기준 누적 등록 대수 (비전기차 = 총계 - 전기차)
+2022,25113145,25503000,총계: MOLIT 보도자료 / EV: 국회도서관 Data&Law,https://www.molit.go.kr/USR/NEWS/m_71/dtl.jsp?id=95087830&lcmspage=16,https://argos.nanet.go.kr/lawstat/arc/attach/112495?view=1,연말 기준 누적 등록 대수 (비전기차 = 총계 - 전기차)
+2023,25405100,25949000,총계: MOLIT 보도자료 / EV: 국회도서관 Data&Law,https://www.molit.go.kr/USR/NEWS/m_71/dtl.jsp?id=95089274&lcmspage=1,https://argos.nanet.go.kr/lawstat/arc/attach/112495?view=1,연말 기준 누적 등록 대수 (비전기차 = 총계 - 전기차)

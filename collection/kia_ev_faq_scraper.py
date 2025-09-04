@@ -16,7 +16,6 @@ OUT_PATH   = os.path.join(SCRIPT_DIR, "..", "datasets", "faq", "kia_ev_faq.json"
 
 
 def make_driver():
-    """기본 크롬 드라이버 (Options 없이)."""
     service = Service()
     driver = webdriver.Chrome(service=service)
     driver.set_page_load_timeout(30)

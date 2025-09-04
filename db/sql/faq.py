@@ -13,6 +13,7 @@ from connection import get_connection
 # --- 설정 ---
 # FAQ JSON 파일들이 있는 디렉토리 경로
 FAQ_JSON_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', '..', 'datasets', 'faq')
+# C:\Users\minek\github\SKN19-1st-04Team\datasets\faq
 
 # --- 메인 데이터 로드 및 삽입 로직 ---
 def load_and_insert_faqs():

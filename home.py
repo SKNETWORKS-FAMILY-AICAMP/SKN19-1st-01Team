@@ -1,4 +1,5 @@
 import streamlit as st
+from matplotlib import rc
 import pandas as pd
 from bokeh.plotting import figure
 import sys # Add sys import
@@ -118,7 +119,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🪫EV vs 🛢️ICE 화재 현황")
+st.title("⚡ EV vs 🚗 ICE 화재 현황")
 
 # 1. 등록대수 데이터
 st.subheader("차량 등록 현황")
@@ -154,7 +155,7 @@ if not reg_data.empty and not reg.empty:
         st.line_chart(ev_fire_df)
 
     with col1:
-        st.subheader("📈 등록대수 10만 건당 화재 발생 횟수")
+        st.subheader("📊 등록대수 10만 건당 화재 발생 횟수")
     fire_rates_df = calculate_fire_rates_per_registration(reg, reg_data)
     if not fire_rates_df.empty:
         chart = alt.Chart(fire_rates_df).mark_bar().encode(

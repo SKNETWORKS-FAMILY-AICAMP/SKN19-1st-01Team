@@ -11,7 +11,6 @@ from connection import get_connection # DB 연결
 import mysql.connector # 에러 핸들링용
 
 # --- DB에서 데이터 로드 함수 ---
-@st.cache_data(ttl=3600) # 1시간 캐시
 def load_registration_data():
     conn = None
     try:
@@ -45,7 +44,6 @@ def load_registration_data():
         if conn:
             conn.close()
 
-@st.cache_data(ttl=3600) # 1시간 캐시
 def load_fire_incident_data():
     conn = None
     try:
@@ -75,7 +73,6 @@ def load_fire_incident_data():
         if conn:
             conn.close()
 
-@st.cache_data(ttl=3600) # 1시간 캐시
 def calculate_fire_rates_per_registration(reg_df, fire_df):
     if reg_df.empty or fire_df.empty:
         return pd.DataFrame()
@@ -88,7 +85,6 @@ def calculate_fire_rates_per_registration(reg_df, fire_df):
     
     return merged_df[['연도', '연료', '화재율']]
 
-@st.cache_data(ttl=3600) # 1시간 캐시
 def load_faq_data_from_db():
     conn = None
     try:
@@ -117,12 +113,12 @@ def load_faq_data_from_db():
 
 # --- Streamlit 앱 시작 ---
 st.set_page_config(
-    page_title="EV vs ICE 화재 현황 & EV FAQ",
+    page_title="EV vs ICE 화재 현황",
     page_icon="🔥",
     layout="wide"
 )
 
-st.title("EV vs ICE 화재 현황 & EV FAQ")
+st.title("🪫EV vs 🛢️ICE 화재 현황")
 
 # 1. 등록대수 데이터
 st.subheader("차량 등록 현황")

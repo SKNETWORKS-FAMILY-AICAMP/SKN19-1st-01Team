@@ -11,7 +11,6 @@ from connection import get_connection
 DATASET_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'datasets')
 
 def get_or_create_manufacturer_id(cursor, manufacturer_name):
-    """Gets the ID of a manufacturer, creating it if it doesn't exist."""
     cursor.execute("SELECT id FROM EV_Manufacturer WHERE name = %s", (manufacturer_name,))
     result = cursor.fetchone()
     if result:
@@ -22,7 +21,6 @@ def get_or_create_manufacturer_id(cursor, manufacturer_name):
         return cursor.lastrowid
 
 def load_total_fire_incidents(cursor):
-    """Loads data from 소방청_차량화재통계.csv into total_fire_incidents table."""
     file_path = os.path.join(DATASET_PATH, '소방청_차량화재통계.csv')
     print(f"Processing {file_path}...")
     try:
@@ -49,7 +47,6 @@ def load_total_fire_incidents(cursor):
         print(f"An error occurred while processing {file_path}: {e}")
 
 def load_vehicle_registrations(cursor):
-    """Loads data from Vehicles_2021-2023.csv into vehicle_registrations table."""
     file_path = os.path.join(DATASET_PATH, 'Vehicles_2021-2023.csv')
     print(f"Processing {file_path}...")
     try:
@@ -76,7 +73,6 @@ def load_vehicle_registrations(cursor):
         print(f"An error occurred while processing {file_path}: {e}")
 
 def load_ev_fire_cases(cursor):
-    """Loads data from 전기차 화재 발생 현황.csv into ev_fire_cases table."""
     file_path = os.path.join(DATASET_PATH, '전기차 화재 발생 현황.csv')
     print(f"Processing {file_path}...")
     try:
@@ -110,7 +106,6 @@ def load_ev_fire_cases(cursor):
         print(f"An error occurred while processing {file_path}: {e}")
 
 def main():
-    """Main function to connect to DB and load all CSV data."""
     conn = None
     try:
         conn = get_connection()

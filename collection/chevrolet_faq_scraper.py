@@ -10,6 +10,7 @@ from selenium.webdriver.chrome.service import Service
 # --- 설정 ---
 URL = 'https://www.chevrolet.co.kr/evlife/faq.gm?utm_source'
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# 저장 파일 명
 OUT_PATH = os.path.join(SCRIPT_DIR, "..", "datasets", "faq", "chevrolet_ev_faq.json")
 
 

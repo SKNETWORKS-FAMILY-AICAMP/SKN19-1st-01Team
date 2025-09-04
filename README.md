@@ -5,7 +5,10 @@
 
 | 강지완 | 마한성 | 이상민 | 임상민 |
 |:--:|:--:|:--:|:--:|
-| ![짱구](assets/짱구.webp) | ![철수](assets/철수.webp) | ![훈이](assets/훈이.webp) | ![맹구](assets/맹구.webp) |
+| <img width="1336" height="1336" alt="Image" src="https://github.com/user-attachments/assets/e96992fe-13f0-4666-a9af-787d9a6e68c5" />
+| <img width="248" height="350" alt="Image" src="https://github.com/user-attachments/assets/5ae03301-5869-4dd8-9c8a-831ead2b95aa" />
+| <img width="570" height="570" alt="Image" src="https://github.com/user-attachments/assets/d2af51c8-8a1e-4fcc-99bd-0b7d69354398" />
+| <img width="1280" height="1280" alt="Image" src="https://github.com/user-attachments/assets/670f52b7-dbe4-44d5-b33c-8de5a313cafd" />|
 
 
 ---

@@ -26,11 +26,14 @@ if connection.is_connected():
         name VARCHAR(100) UNIQUE NOT NULL
     );
 
+    DROP TABLE IF EXISTS vehicle_registrations;
+
     CREATE TABLE IF NOT EXISTS vehicle_registrations (
         id INT AUTO_INCREMENT PRIMARY KEY,
         year INT NOT NULL,
         fuel_type VARCHAR(50) NOT NULL,
-        count INT NOT NULL
+        count INT NOT NULL,
+        source_url VARCHAR(255)
     );
 
     CREATE TABLE IF NOT EXISTS total_fire_incidents (

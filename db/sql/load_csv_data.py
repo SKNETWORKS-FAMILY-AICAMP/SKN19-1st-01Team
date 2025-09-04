@@ -49,24 +49,24 @@ def load_total_fire_incidents(cursor):
         print(f"An error occurred while processing {file_path}: {e}")
 
 def load_vehicle_registrations(cursor):
-    """Loads data from 자동차_연료_종류별_등록_세로.csv into vehicle_registrations table."""
-    file_path = os.path.join(DATASET_PATH, '자동차_연료_종류별_등록_세로.csv')
+    """Loads data from Vehicles_2021-2023.csv into vehicle_registrations table."""
+    file_path = os.path.join(DATASET_PATH, 'Vehicles_2021-2023.csv')
     print(f"Processing {file_path}...")
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             reader = csv.reader(f)
-            header = next(reader) # 'ID', '연료', '2021', '2022', '2023'
-            years = [int(y) for y in header[2:]]
+            header = next(reader) # 'ID', '연료', '2021', '2022', '2023', 'source_url'
+            years = [int(y) for y in header[2:5]] # Years are at index 2, 3, 4
 
-            sql = "INSERT IGNORE INTO vehicle_registrations (year, fuel_type, count) VALUES (%s, %s, %s)"
+            sql = "INSERT IGNORE INTO vehicle_registrations (year, fuel_type, count, source_url) VALUES (%s, %s, %s, %s)"
             total_inserted = 0
             for row in reader:
                 fuel_type = row[1]
-                if fuel_type == '계': # Skip total row
-                    continue
-                counts = [int(c) for c in row[2:]]
+                # No need to skip '계' as the new file only contains EV, ICE, 총계
+                counts = [int(c) for c in row[2:5]] # Counts are at index 2, 3, 4
+                source_url = row[5] # Source URL is at index 5
                 for i, year in enumerate(years):
-                    cursor.execute(sql, (year, fuel_type, counts[i]))
+                    cursor.execute(sql, (year, fuel_type, counts[i], source_url))
                     total_inserted += cursor.rowcount
             print(f"Inserted {total_inserted} rows into vehicle_registrations.")
 

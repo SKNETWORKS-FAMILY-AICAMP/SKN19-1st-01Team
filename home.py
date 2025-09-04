@@ -7,33 +7,13 @@ st.set_page_config(
 )
 
 readme_content = """
-import streamlit as st
-import os
-
-st.set_page_config(
-    page_title="EV Fire Fact-Check Project",
-    page_icon="🔥",
-    layout="wide"
-)
-
-# README.md 파일 경로
-readme_file_path = os.path.join(os.path.dirname(__file__), '..', 'README.md')
-
-try:
-    with open(readme_file_path, 'r', encoding='utf-8') as f:
-        readme_content = f.read()
-    st.markdown(readme_content)
-except FileNotFoundError:
-    st.error(f"README.md 파일을 찾을 수 없습니다: {readme_file_path}")
-except Exception as e:
-    st.error(f"README.md 파일을 읽는 중 오류가 발생했습니다: {e}")
+# 전기차 화재 발생률 분석 및 배터리 안전 FAQ
 
 
 ## 1. 팀 소개
 
 | 강지완 | 마한성 | 이상민 | 임상민 |
 |:--:|:--:|:--:|:--:|
-| <img width="100" alt="Image" src="https://github.com/user-attachments/assets/e96992fe-13f0-4666-a9af-787d9a6e68c5" /> | <img width="100" alt="Image" src="https://github.com/user-attachments/assets/5ae03301-5869-4dd8-9c8a-831ead2b95aa" /> | <img width="100" alt="Image" src="https://github.com/user-attachments/assets/d2af51c8-8a1e-4fcc-99bd-0b7d69354398" /> | <img width="100" alt="Image" src="https://github.com/user-attachments/assets/8c3f07a5-7e5f-45f7-bc34-4f20354b044a" /> |
 
 
 ---
@@ -70,7 +50,7 @@ except Exception as e:
 
 | 구분        | 전기차 (EV) | 내연기관차 (ICE) |
 |-------------|-------------|------------------|
-| 10만 대당 화재 건수 | 5건 (예시) | 50건 (예시) |
+| 10만 대당 화재 건수 | 13.2건 | 14.7건 |
 | 주요 원인   | 배터리 열폭주, 충전 이상 | 연료 누출, 엔진 과열 |
 | 비고        | 발생률 낮으나 진압 어려움 | 발생률 높으나 진압 용이 |
 
@@ -117,13 +97,13 @@ except Exception as e:
 
 ## 4. WBS 🛠
 
-<img width="1000" alt="SKN-1ST-4TEAM" src="https://github.com/user-attachments/assets/019fe2cf-743e-4025-a441-b6eed28ebbdf" />
+- 깃허브 참조
 
 ---
 
 ## 5. 요구사항 명세서 🛠
 
-<img width="1000" alt="SKN-1ST-4TEAM (1)" src="https://github.com/user-attachments/assets/95c0ba12-2ed7-4503-b938-72ae0d9e8980" />
+- 깃허브 참조
 
 
 
@@ -131,7 +111,7 @@ except Exception as e:
 
 ## 6. ERD 🛠
 
-<img width="600" alt="Image" src="https://github.com/user-attachments/assets/50a5f133-92d2-4be2-843a-00fd09846380" />
+- 깃허브 참조
 
 ---
 
@@ -144,13 +124,7 @@ except Exception as e:
 
 ## 7. 실행결과 🛠
 
-<img width="1441" height="594" alt="Image" src="https://github.com/user-attachments/assets/242d7836-3eb7-43c2-92b0-7036124e0dd7" />
-
-<img width="1441" height="543" alt="Image" src="https://github.com/user-attachments/assets/2ff8b8dc-ec66-4cf3-91c0-4a2b93b56834" />
-
-<img width="1444" height="481" alt="Image" src="https://github.com/user-attachments/assets/4c6c8202-a9b5-4ae6-9cf1-ac869bb3e185" />
-
-<img width="1445" height="745" alt="Image" src="https://github.com/user-attachments/assets/59df4e7b-3461-4a3b-b929-ed0de2ff2ba4" />
+- 깃허브 참조
 
 ---
 

@@ -90,7 +90,8 @@
 
 ## 5. 요구사항 명세서 🛠
 
-<img width="1000" alt="SKN-1ST-4TEAM (1)" src="https://github.com/user-attachments/assets/5cfe9ba4-b112-4f48-bc4e-a1528d77ae61" />
+<img width="1000" alt="명세서" src="https://github.com/user-attachments/assets/0eef812d-bd62-4d51-b79f-e8895aa05500" />
+
 
 ---
 

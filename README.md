@@ -109,11 +109,13 @@
 
 ## 7. 실행결과 🛠
 
-(여기에 이미지 삽입)
-(여기에 이미지 삽입)
-(여기에 이미지 삽입)
-(여기에 이미지 삽입)
+<img width="1441" height="543" alt="Image" src="https://github.com/user-attachments/assets/2ff8b8dc-ec66-4cf3-91c0-4a2b93b56834" />
 
+<img width="1444" height="481" alt="Image" src="https://github.com/user-attachments/assets/4c6c8202-a9b5-4ae6-9cf1-ac869bb3e185" />
+
+<img width="1441" height="594" alt="Image" src="https://github.com/user-attachments/assets/242d7836-3eb7-43c2-92b0-7036124e0dd7" />
+
+<img width="1445" height="745" alt="Image" src="https://github.com/user-attachments/assets/59df4e7b-3461-4a3b-b929-ed0de2ff2ba4" />
 
 ---
 

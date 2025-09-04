@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import re # Add re import for regex operations
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -46,8 +47,13 @@ def main():
         data = []
         for i in range(n):
             question = (q_elems[i].text or "").strip()
-            answer = a_elems[i].get_attribute("innerHTML") or ""
-            data.append({"question": question, "answer": answer})
+            answer_html_raw = a_elems[i].get_attribute("innerHTML") or ""
+            
+            # HTML 태그와 개행문자 등을 제거하고 공백을 정규화합니다.
+            text_without_html = re.sub(r'<[^>]+>', '', answer_html_raw)
+            cleaned_answer = re.sub(r'\s+', ' ', text_without_html).strip()
+            
+            data.append({"question": question, "answer": cleaned_answer})
 
         with open(OUT_PATH, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)

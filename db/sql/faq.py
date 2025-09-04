@@ -61,6 +61,8 @@ def load_and_insert_faqs():
                 manufacturer_name = "Kia"
             elif "renault" in filename: # 르노도 추가
                 manufacturer_name = "Renault"
+            elif "tesla" in filename: # 테슬라 추가
+                manufacturer_name = "Tesla"
             # 필요에 따라 다른 제조사 추가
 
             # 제조사 ID 가져오기 또는 생성

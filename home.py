@@ -7,14 +7,33 @@ st.set_page_config(
 )
 
 readme_content = """
-# 전기차 화재 발생률 분석 및 배터리 안전 FAQ
+import streamlit as st
+import os
+
+st.set_page_config(
+    page_title="EV Fire Fact-Check Project",
+    page_icon="🔥",
+    layout="wide"
+)
+
+# README.md 파일 경로
+readme_file_path = os.path.join(os.path.dirname(__file__), '..', 'README.md')
+
+try:
+    with open(readme_file_path, 'r', encoding='utf-8') as f:
+        readme_content = f.read()
+    st.markdown(readme_content)
+except FileNotFoundError:
+    st.error(f"README.md 파일을 찾을 수 없습니다: {readme_file_path}")
+except Exception as e:
+    st.error(f"README.md 파일을 읽는 중 오류가 발생했습니다: {e}")
 
 
 ## 1. 팀 소개
 
 | 강지완 | 마한성 | 이상민 | 임상민 |
 |:--:|:--:|:--:|:--:|
-| ![짱구](assets/짱구.webp) | ![철수](assets/철수.webp) | ![훈이](assets/훈이.webp) | ![맹구](assets/맹구.webp) |
+| <img width="100" alt="Image" src="https://github.com/user-attachments/assets/e96992fe-13f0-4666-a9af-787d9a6e68c5" /> | <img width="100" alt="Image" src="https://github.com/user-attachments/assets/5ae03301-5869-4dd8-9c8a-831ead2b95aa" /> | <img width="100" alt="Image" src="https://github.com/user-attachments/assets/d2af51c8-8a1e-4fcc-99bd-0b7d69354398" /> | <img width="100" alt="Image" src="https://github.com/user-attachments/assets/8c3f07a5-7e5f-45f7-bc34-4f20354b044a" /> |
 
 
 ---
@@ -26,7 +45,7 @@ readme_content = """
 📎 **프로젝트 명** : 전기차와 내연기관차 화재 발생률 비교 및 배터리 안전 FAQ 조회 서비스
 📅 **기간** : 2025/09/03-2025/09/04
 🎯 **목적** : 전기차 화재 안전성에 대한 객관적 데이터 제시 및 불안감 해소  
-📖 **레퍼런스** : 국토교통부, 소방청 화재 통계 / 현대자동차 FAQ   
+📖 **레퍼런스** : 국토교통부, 소방청 화재 통계 / 기아자동차, 테슬라, 쉐보레 EV FAQ
 
 ---
 
@@ -60,7 +79,10 @@ readme_content = """
 ---
 
 ## ❓ 배터리 안전 FAQ
--> 각 기업, 정부별 FAQ에 접근할 수 있도록
+- 기업별 FAQ 접근
+  - 기아 EV
+  - 쉐보레 
+  - 테슬라
 
 
 
@@ -85,63 +107,73 @@ readme_content = """
 
 ## 3. 기술 스택 🛠
 - Python (데이터 처리 및 시각화)
-- Pandas, Matplotlib/Plotly
-- Streamlit (FAQ 인터페이스)
+  > Pandas, Altair
+- Streamlit (인터페이스)
+- MySQL (데이터베이스)
+- DA# Modeler5 (ERD)
 - Selenium (FAQ 크롤링)
 
 ---
 
 ## 4. WBS 🛠
 
-- (여기에 이미지 삽입)
+<img width="1000" alt="SKN-1ST-4TEAM" src="https://github.com/user-attachments/assets/019fe2cf-743e-4025-a441-b6eed28ebbdf" />
 
 ---
 
 ## 5. 요구사항 명세서 🛠
 
-- (여기에 이미지 삽입)
+<img width="1000" alt="SKN-1ST-4TEAM (1)" src="https://github.com/user-attachments/assets/95c0ba12-2ed7-4503-b938-72ae0d9e8980" />
+
+
 
 ---
 
 ## 6. ERD 🛠
 
-- (여기에 이미지 삽입)
+<img width="600" alt="Image" src="https://github.com/user-attachments/assets/50a5f133-92d2-4be2-843a-00fd09846380" />
 
 ---
 
 ## 🔍 수집 데이터
-- **국토교통부/소방청** : 차량 화재 통계
-- **IEA EV 데이터** : 전기차 보급 현황
-- **기업 FAQ** : 현대·기아·테슬라 공식 FAQ 페이지 크롤링  
+- **소방청** : 차량 화재 통계
+- **국토교통부/한국전력공사** : 전기차 보급 현황 및 전기차 제조사/차량 목록
+- **기업 FAQ** : 현대·기아·테슬라 공식 FAQ 페이지 크롤링
 
 ---
 
 ## 7. 실행결과 🛠
 
-(여기에 이미지 삽입)
-(여기에 이미지 삽입)
-(여기에 이미지 삽입)
-(여기에 이미지 삽입)
+<img width="1441" height="594" alt="Image" src="https://github.com/user-attachments/assets/242d7836-3eb7-43c2-92b0-7036124e0dd7" />
 
+<img width="1441" height="543" alt="Image" src="https://github.com/user-attachments/assets/2ff8b8dc-ec66-4cf3-91c0-4a2b93b56834" />
+
+<img width="1444" height="481" alt="Image" src="https://github.com/user-attachments/assets/4c6c8202-a9b5-4ae6-9cf1-ac869bb3e185" />
+
+<img width="1445" height="745" alt="Image" src="https://github.com/user-attachments/assets/59df4e7b-3461-4a3b-b929-ed0de2ff2ba4" />
 
 ---
 
-## 💡 개발과정 이슈 및 해결
+## 8. 개발과정 이슈 및 해결 💡
 - 데이터 소스별 정의 불일치 → 전처리 과정에서 기준 단일화
-- 화재 발생률 표본 수 부족 → 보조 통계(미국 NHTSA, NFPA 자료) 병행
+- 화재 발생률 표본 수 부족 → 소방청 브리핑 자료 및 해당 자료를 참고한 언론 보도 활용
 - FAQ 크롤링 차단 이슈 → Selenium 및 User-Agent 헤더 추가로 해결
 
 ---
 
-## 8. 회고 🖊
-- **강지원** : EV 화재 통계 자료의 한계점을 알 수 있었고, 데이터 신뢰성을 검증하는 과정이 중요하다는 걸 배웠습니다.  
-- **마한성** : FAQ 크롤링 과정에서 동적 스크래핑 경험을 쌓을 수 있었습니다.  
-- **이상민** : 데이터 시각화와 문서화 과정에서 협업 소통의 필요성을 절감했습니다.  
-- **임상민** : 데이터 시각화와 문서화 과정에서 협업 소통의 필요성을 절감했습니다.  
+## 9. 회고 🖊
+- **강지완**
+> 데이터를 활용하는 과제에 있어서 주제 선정이 얼마나 중요한지를 깨달을 수 있었습니다. 주제가 커버할 수 있는 범위가 좁아질 수록, 데이터를 수집하기 어려워지고 원하는 데이터를 얻기 힘들어진다는 것을 깨닫게 되었습니다. 기존 데이터 수집 방법으로는 csv 파일 탐색 및 API 요청 위주였습니다. 이번 기회에 정적 크롤링, 동적 크롤링 기법 모두 사용하면서 데이터 수집에 대한 자신감을 얻게 되었습니다. 프로젝트 초기 진행 단계의 중요성 또한 깨닫게 되었습니다. 팀 프로젝트의 경험이 부족했기 때문에 업무 분담 및 개발 환경 통일, Git 저장소 및 브랜치 관리 등에 있어 부족함이 있음을 알게 되었습니다. 이후의 프로젝트를 진행할 때는 지금의 경험을 교훈삼아 더 체계적인 과정을 진행할 수 있도록 노력하겠습니다.
+- **마한성**
+> 이번 프로젝트에서는 사전 조사 부족으로 인한 데이터 부족 문제로 중간에 주제 변경을 고려해야 하는 상황이 발생했으며, 향후 프로젝트에서는 구체적인 목표 설정보다는 큰 방향만 정해두고 데이터 수집을 먼저 꼼꼼히 진행하여 실현 가능한 범위에서 주제를 확정하는 것이 중요하다는 교훈을 얻었습니다. 또한 크롤링 지식 부족으로 Tesla FAQ 접근이 차단되고, 텍스트 중간의 이미지나 표 구조 처리에 어려움을 겪으면서 기본적인 크롤링 기법 외에도 다양한 웹 구조에 대응할 수 있는 크롤링 기술의 필요성을 실감했습니다. 이러한 경험을 통해 데이터 중심의 프로젝트 설계 방식과 다양한 크롤링 상황에 대한 대응 능력을 다음 프로젝트의 핵심 개선사항으로 설정하게 되었습니다.
+- **이상민**
+> SKN 부트캠프를 시작하고 얼마 안 지나서 진행한 프로젝트라 걱정이 정말 많았었는데 좋은 팀원 분들과 의논해가면서 진행하는 과정이 한편으로는 프로그래밍에 재미를 붙일 수 있는 기회가 되어준 것 같습니다. 프로젝트 진행에 크게 문제는 없었지만, 주제가 ‘자동차’라는 주제 안에서 너무 깊게 들어가버린 감이 없지 않아 있어서 전 기수 분들의 프로젝트랑 대비했을 때 데이터의 양이 다소 적어보인다는 느낌이 들었습니다. 또한 대학교 재학 중에 간단하게 배웠던 크롤링을 이제서야 실전으로 구현해보았는데, selenium, requests, BeautifulSoup 등의 라이브러리를 사용하는 과정이 이론으로 배울 때만큼 쉽지는 않다는걸 뼈아프게 느끼게 되었습니다. 이러한 점들을 바탕으로 다음 프로젝트부터는 프로그래밍을 본격적으로 시작하기 전에 보다 확실하게 데이터를 확인하는 등 확실하게 계획을 짜야할 것 같습니다.
+- **임상민**
+> 수업 시간에 배운 크롤링 기법을 직접 적용하여 실제 데이터를 수집하면서 배운 내용을 터득할 수 있었다. 데이터를 정리하고 문서화하는 과정에서 정보 구조화의 중요성을 느꼈다. Streamlit을 통해 분석 결과를 시각적으로 표현하며, 코드가 눈에 보이는 결과물로 변하는 경험이 새로웠다. 짧은 기간 안에 여러 도구와 개념을 연결해보며 부족한 부분과 보완할 점도 명확히 알게 되었다. 앞으로는 더 효율적인 코드 작성과 깔끔한 시각화를 통해 프로젝트 완성도를 높이고 싶다.
 
 ---
 
-## 📄 참고 자료
+## 10. 참고 자료 📄
 - [국토교통부 자동차 등록 통계](https://www.molit.go.kr)  
 - [소방청 화재 통계](https://www.nfa.go.kr)  
 - [IEA Global EV Outlook](https://www.iea.org/reports/global-ev-outlook)  
@@ -151,6 +183,7 @@ readme_content = """
 
 ## 📜 라이선스
 본 프로젝트는 MIT License 하에 배포됩니다.
+
 """
 
 st.markdown(readme_content)

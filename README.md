@@ -4,6 +4,7 @@
 ## 1. 팀 소개
 
 | 강지완       | 마한성       | 이상민       | 임상민      |
+| <img src="https://i.namu.wiki/i/w9i0P5LgE48YCfVg98CVZ4I4rYxVctD92Ghv5kK5dVX8gC_SIVcL6wHwvMXdkUKW86ISGPlrzQQ4a95EMXjYjdDgLPjMEZPfD9g0Wy7GnSPPOzo6v0jPi9ztAcH46SLPbStj0d3mmSKvmvY8HNJoHg.webp.png" width="200" height="200"/> | <img src="https://i.namu.wiki/i/n4NRupZCrGyHEA-waT9sGb2_VLHDFbqy1aQyG5yD_zKBnzYY7IG9Rkt-W2e7L5CM6T57MkUQpyCgqUmOEdrHkjfP2TYzBQmskmoPRX2UxZdXoH9EQDD83LY1mf7zB9Bhp6akUs4SpGx_zzyL6FJ3AA.webp.png" width="200" height="200"/> | <img src="https://i.namu.wiki/i/m5ipF2vsu_CpbLQWf5zhSbN4riSgZdKXMisg4ffQ5jixemeD_dyi_Wq47UQOLCf0wiI6ZgMJO747xSQ3SKEn8VGHobdpuQAf5ku_nQ26mr382PmOFiDVX2n-pqPPclRcwFsqm3b0UlJUoigfZLgVvQ.webp.png" width="200" height="200"/> | <img src="https://i.namu.wiki/i/MJenwF1J7yP4dqWJI-oYvzQbFmiiEArJCZGhKMl6DPBYP1yJE3TxC19BiwaA8dOVYyxPj2GTJqFGhMG7bDyZVxVpUDmM_IX7E6iyvPwf1_sfIH6JvDR4S6Dw3mqD2qZ25so8jkn3_2qDfHoRpL8lPg.webp.png" width="200" height="200"/> |
 | ------------ | ------------ | ------------ | ------------ |
 
 ---

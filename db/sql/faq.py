@@ -1,129 +1,129 @@
 import json
-import sys
 import os
 from datetime import datetime
 import glob
+import sys # Add sys import
 
 # Add the parent directory to the Python path to enable importing connection.py
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+# connection.py에서 get_connection 함수 임포트
 from connection import get_connection
 
-# The directory containing the FAQ JSON files
+# --- 설정 ---
+# FAQ JSON 파일들이 있는 디렉토리 경로
 FAQ_JSON_DIRECTORY = os.path.join(os.path.dirname(__file__), '..', '..', 'datasets', 'faq')
+# C:\Users\minek\github\SKN19-1st-04Team\datasets\faq
 
-def load_faq_data(file_path):
-    """Loads FAQ data from a JSON file."""
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        return data
-    except FileNotFoundError:
-        print(f"Error: JSON file not found at {file_path}")
-        return None
-    except json.JSONDecodeError:
-        print(f"Error: Could not decode JSON from {file_path}")
-        return None
-
-def get_or_create_manufacturer_id(cursor, manufacturer_name):
-    """Gets the ID of a manufacturer, creating it if it doesn't exist."""
-    cursor.execute("SELECT id FROM EV_Manufacturer WHERE name = %s", (manufacturer_name,))
-    result = cursor.fetchone()
-    if result:
-        return result[0]
-    else:
-        print(f"Manufacturer '{manufacturer_name}' not found. Inserting it.")
-        cursor.execute("INSERT INTO EV_Manufacturer (name) VALUES (%s)", (manufacturer_name,))
-        return cursor.lastrowid
-
-def insert_faq_to_db(faq_data, manufacturer_name, conn, cursor):
-    """Inserts FAQ data into the EV_Manufacturer_FAQ table."""
-    if not faq_data:
-        print("No FAQ data to insert.")
-        return 0
-
-    try:
-        manufacturer_id = get_or_create_manufacturer_id(cursor, manufacturer_name)
-        if not manufacturer_id:
-            print(f"Could not get or create manufacturer ID for '{manufacturer_name}'. Skipping.")
-            return 0
-
-        sql = """
-        INSERT IGNORE INTO EV_Manufacturer_FAQ (
-            manufacturer_id, source_url, section, question, answer_text, answer_html, captured_at
-        ) VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """
-        
-        captured_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        
-        inserted_count = 0
-        for faq in faq_data:
-            source_url = faq.get('source_url')
-            section = faq.get('section')
-            question = faq.get('question')
-            answer_text = faq.get('answer_text')
-            answer_html = faq.get('answer_html')
-
-            if not all([source_url, question, answer_text]):
-                print(f"Skipping invalid FAQ entry: {faq.get('question', 'N/A')}")
-                continue
-
-            values = (manufacturer_id, source_url, section, question, answer_text, answer_html, captured_at)
-            cursor.execute(sql, values)
-            inserted_count += cursor.rowcount # Counts how many rows were actually inserted
-
-        return inserted_count
-
-    except Exception as e:
-        print(f"Database error while processing for manufacturer '{manufacturer_name}': {e}")
-        raise # Re-raise the exception to trigger rollback
-
-def process_all_faq_files():
-    """Loads all FAQ JSON files from the specified directory and inserts them into the database."""
+# --- 메인 데이터 로드 및 삽입 로직 ---
+def load_and_insert_faqs():
     conn = None
-    total_inserted = 0
+    cursor = None
     try:
-        conn = get_connection()
-        cursor = conn.cursor()
-
-        json_files = glob.glob(os.path.join(FAQ_JSON_DIRECTORY, '*.json'))
-        if not json_files:
-            print(f"No JSON files found in {FAQ_JSON_DIRECTORY}")
+        conn = get_connection() # connection.py의 get_connection 사용
+        if not conn:
             return
 
+        cursor = conn.cursor()
+
+        # 1. 기존 데이터 전부 삭제 (TRUNCATE)
+        print("기존 FAQ 데이터 삭제 중...")
+        cursor.execute("TRUNCATE TABLE EV_Manufacturer_FAQ")
+        print("기존 데이터 삭제 완료.")
+
+        # 2. EV_Manufacturer 테이블에서 제조사 ID 가져오기 또는 새로 생성
+        # 이 부분은 기존 faq.py의 get_or_create_manufacturer_id 로직을 단순화합니다.
+        # 실제 프로젝트에서는 EV_Manufacturer 테이블이 미리 채워져 있거나,
+        # 스크래퍼에서 제조사 정보를 명확히 제공해야 합니다.
+        # 여기서는 파일명에서 제조사를 유추합니다.
+        
+        # 제조사 ID를 저장할 딕셔너리
+        manufacturer_ids = {}
+        
+        # 모든 JSON 파일 찾기
+        json_files = glob.glob(os.path.join(FAQ_JSON_DIRECTORY, '*.json'))
+        if not json_files:
+            print(f"경로에 JSON 파일이 없습니다: {FAQ_JSON_DIRECTORY}")
+            return
+
+        total_inserted_count = 0
+        captured_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
         for file_path in json_files:
-            print(f"Processing file: {file_path}")
-            faq_data = load_faq_data(file_path)
-            if not faq_data:
-                print(f"Failed to load data from {file_path}. Skipping.")
+            print(f"\n파일 처리 중: {file_path}")
+            
+            # 파일명에서 제조사 이름 유추
+            filename = os.path.basename(file_path).lower()
+            manufacturer_name = "Unknown"
+            if "chevrolet" in filename:
+                manufacturer_name = "Chevrolet"
+            elif "kia" in filename:
+                manufacturer_name = "Kia"
+            elif "renault" in filename: # 르노도 추가
+                manufacturer_name = "Renault"
+            # 필요에 따라 다른 제조사 추가
+
+            # 제조사 ID 가져오기 또는 생성
+            if manufacturer_name not in manufacturer_ids:
+                cursor.execute("SELECT id FROM EV_Manufacturer WHERE name = %s", (manufacturer_name,))
+                result = cursor.fetchone()
+                if result:
+                    manufacturer_ids[manufacturer_name] = result[0]
+                else:
+                    print(f"제조사 '{manufacturer_name}'를 EV_Manufacturer 테이블에 추가합니다.")
+                    cursor.execute("INSERT INTO EV_Manufacturer (name) VALUES (%s)", (manufacturer_name,))
+                    manufacturer_ids[manufacturer_name] = cursor.lastrowid
+            
+            current_manufacturer_id = manufacturer_ids[manufacturer_name]
+
+            # JSON 파일 로드
+            try:
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    faqs = json.load(f)
+            except (FileNotFoundError, json.JSONDecodeError) as e:
+                print(f"JSON 파일 로드 오류 ({file_path}): {e}")
                 continue
 
-            filename = os.path.basename(file_path)
-            manufacturer_name = "General" # Default
-            if 'kia' in filename.lower():
-                manufacturer_name = 'Kia'
-            elif faq_data and 'pge.com' in faq_data[0].get('source_url', ''): # Check content for pge
-                 manufacturer_name = 'PGE'
-            
-            print(f"Determined manufacturer: {manufacturer_name}")
+            if not faqs:
+                print(f"파일에 FAQ 데이터가 없습니다: {file_path}")
+                continue
 
-            inserted_count = insert_faq_to_db(faq_data, manufacturer_name, conn, cursor)
-            total_inserted += inserted_count
-            print(f"Inserted {inserted_count} new entries for this file.")
-        
-        conn.commit()
-        print(f"\nProcessing complete. Total new entries inserted: {total_inserted}")
+            # 3. FAQ 데이터 삽입
+            insert_sql = """
+            INSERT INTO EV_Manufacturer_FAQ (manufacturer_id, question, answer, captured_at)
+            VALUES (%s, %s, %s, %s)
+            """
+            
+            inserted_count_for_file = 0
+            for faq in faqs:
+                question = faq.get('question')
+                answer = faq.get('answer')
+
+                if question and answer: # 질문과 답변이 모두 있는 경우만 삽입
+                    try:
+                        cursor.execute(insert_sql, (current_manufacturer_id, question, answer, captured_at))
+                        inserted_count_for_file += 1
+                    except mysql.connector.Error as err:
+                        print(f"데이터 삽입 오류 (질문: {question[:30]}...): {err}")
+                else:
+                    print(f"유효하지 않은 FAQ 항목 건너뛰기 (질문 또는 답변 없음): {faq}")
+
+            conn.commit() # 파일별로 커밋
+            total_inserted_count += inserted_count_for_file
+            print(f"'{manufacturer_name}' 제조사 FAQ {inserted_count_for_file}개 삽입 완료.")
+
+        print(f"\n모든 파일 처리 완료. 총 {total_inserted_count}개의 FAQ 데이터 삽입.")
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(f"오류 발생: {e}")
         if conn:
-            conn.rollback()
+            conn.rollback() # 오류 발생 시 롤백
     finally:
-        if 'cursor' in locals() and cursor:
+        if cursor:
             cursor.close()
         if conn:
             conn.close()
 
-
+# --- 스크립트 실행 ---
 if __name__ == "__main__":
-    process_all_faq_files()
+    load_and_insert_faqs()

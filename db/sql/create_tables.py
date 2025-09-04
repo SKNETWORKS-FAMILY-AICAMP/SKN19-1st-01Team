@@ -26,39 +26,46 @@ if connection.is_connected():
         name VARCHAR(100) UNIQUE NOT NULL
     );
 
+    DROP TABLE IF EXISTS vehicle_registrations;
+
     CREATE TABLE IF NOT EXISTS vehicle_registrations (
         id INT AUTO_INCREMENT PRIMARY KEY,
         year INT NOT NULL,
         fuel_type VARCHAR(50) NOT NULL,
-        count INT NOT NULL
+        count INT NOT NULL,
+        source_url VARCHAR(255)
     );
 
+    DROP TABLE IF EXISTS total_fire_incidents;
     CREATE TABLE IF NOT EXISTS total_fire_incidents (
         id INT AUTO_INCREMENT PRIMARY KEY,
         year INT NOT NULL,
-        count INT NOT NULL
+        total_fires INT NOT NULL,
+        general_road INT,
+        highway INT,
+        other_road INT,
+        parking_lot INT,
+        vacant_lot INT,
+        tunnel INT
     );
 
+    DROP TABLE IF EXISTS ev_fire_cases;
     CREATE TABLE IF NOT EXISTS ev_fire_cases (
         id INT AUTO_INCREMENT PRIMARY KEY,
         year INT NOT NULL,
-        manufacturer_id INT NOT NULL,
-        model VARCHAR(100) NOT NULL,
-        ignition_point VARCHAR(255) NOT NULL,
-        situation VARCHAR(100),
-        battery_supplier VARCHAR(100),
-        FOREIGN KEY (manufacturer_id) REFERENCES EV_Manufacturer(id)
+        total_fires INT NOT NULL,
+        total_casualties INT,
+        deaths INT,
+        injuries INT,
+        property_damage_krw BIGINT
     );
 
     CREATE TABLE IF NOT EXISTS EV_Manufacturer_FAQ (
         id INT AUTO_INCREMENT PRIMARY KEY,
         manufacturer_id INT NOT NULL,
-        section VARCHAR(255),
         question TEXT NOT NULL,
-        answer_text TEXT NOT NULL,
-        answer_html TEXT,
-        source_url VARCHAR(255),
-        captured_at DATETIME,
+        answer TEXT NOT NULL,
+        captured_at DATETIME NOT NULL,
         FOREIGN KEY (manufacturer_id) REFERENCES EV_Manufacturer(id)
     );
 
@@ -67,7 +74,6 @@ if connection.is_connected():
     GRANT ALL PRIVILEGES ON ev_fire.* TO 'ohgiraffers'@'localhost';
     FLUSH PRIVILEGES;
 
-    INSERT IGNORE INTO EV_Manufacturer (name) VALUES ('Kia');
     """
 
     # Execute each statement

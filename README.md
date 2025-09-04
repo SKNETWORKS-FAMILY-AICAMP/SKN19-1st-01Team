@@ -4,7 +4,7 @@
 ## 1. 팀 소개
 
 | 강지완       | 마한성       | 이상민       | 임상민      |
-| <img src="assets/짱구.png" width="400" alt="짱구"> | <img src="assets/철수.png" width="400" alt="철수"> | <img src="assets/훈이.png" width="400" alt="훈이"> | <img src="assets/맹구.png" width="400" alt="맹구"> |
+| <img src="assets/짱구.webp" width="400" alt="짱구"> | <img src="assets/철수.webp" width="400" alt="철수"> | <img src="assets/훈이.webp" width="400" alt="훈이"> | <img src="assets/맹구.webp" width="400" alt="맹구"> |
 | ------------ | ------------ | ------------ | ------------ |
 
 ---

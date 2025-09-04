@@ -90,7 +90,9 @@
 
 ## 5. 요구사항 명세서 🛠
 
-<img width="1000" alt="SKN-1ST-4TEAM (1)" src="https://github.com/user-attachments/assets/5cfe9ba4-b112-4f48-bc4e-a1528d77ae61" />
+<img width="1000" alt="SKN-1ST-4TEAM (1)" src="https://github.com/user-attachments/assets/95c0ba12-2ed7-4503-b938-72ae0d9e8980" />
+
+
 
 ---
 
@@ -109,22 +111,24 @@
 
 ## 7. 실행결과 🛠
 
-(여기에 이미지 삽입)
-(여기에 이미지 삽입)
-(여기에 이미지 삽입)
-(여기에 이미지 삽입)
+<img width="1441" height="594" alt="Image" src="https://github.com/user-attachments/assets/242d7836-3eb7-43c2-92b0-7036124e0dd7" />
 
+<img width="1441" height="543" alt="Image" src="https://github.com/user-attachments/assets/2ff8b8dc-ec66-4cf3-91c0-4a2b93b56834" />
+
+<img width="1444" height="481" alt="Image" src="https://github.com/user-attachments/assets/4c6c8202-a9b5-4ae6-9cf1-ac869bb3e185" />
+
+<img width="1445" height="745" alt="Image" src="https://github.com/user-attachments/assets/59df4e7b-3461-4a3b-b929-ed0de2ff2ba4" />
 
 ---
 
-## 💡 개발과정 이슈 및 해결
+## 8. 개발과정 이슈 및 해결 💡
 - 데이터 소스별 정의 불일치 → 전처리 과정에서 기준 단일화
 - 화재 발생률 표본 수 부족 → 보조 통계(미국 NHTSA, NFPA 자료) 병행
 - FAQ 크롤링 차단 이슈 → Selenium 및 User-Agent 헤더 추가로 해결
 
 ---
 
-## 8. 회고 🖊
+## 9. 회고 🖊
 - **강지완** : EV 화재 통계 자료의 한계점을 알 수 있었고, 데이터 신뢰성을 검증하는 과정이 중요하다는 걸 배웠습니다.  
 - **마한성** : FAQ 크롤링 과정에서 동적 스크래핑 경험을 쌓을 수 있었습니다.  
 - **이상민** : 각 파트별로 수업을 진행하여 해당 파트가 어떤 부분에서 활용되는 지 이해도가 떨어지는 부분이 있었는데, 이번 프로젝트를 진행하면서 전체적인 흐름을 이해할 수 있었습니다. 프로젝트를 진행하면서 깃허브 연결, 크롤링 등 어려웠던 부분에 대한 부족한 점을 확인했고, readme의 요구사항 명세서, WBS 작성 등 실무에 활용되는 부분을 팀원들과 함께 실습하는 기회를 가져 앞으로 공부 방향성을 확인하는 기회가 됐습니다.
@@ -132,7 +136,7 @@
 
 ---
 
-## 📄 참고 자료
+## 10. 참고 자료 📄
 - [국토교통부 자동차 등록 통계](https://www.molit.go.kr)  
 - [소방청 화재 통계](https://www.nfa.go.kr)  
 - [IEA Global EV Outlook](https://www.iea.org/reports/global-ev-outlook)  

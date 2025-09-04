@@ -84,14 +84,14 @@
 
 ## 4. WBS 🛠
 
-- (여기에 이미지 삽입)
+<img width="1786" height="714" alt="SKN-1ST-4TEAM" src="https://github.com/user-attachments/assets/019fe2cf-743e-4025-a441-b6eed28ebbdf" />
 
 ---
 
 ## 5. 요구사항 명세서 🛠
 
 
-<img width="1786" height="714" alt="SKN-1ST-4TEAM" src="https://github.com/user-attachments/assets/019fe2cf-743e-4025-a441-b6eed28ebbdf" />
+
 
 ---
 

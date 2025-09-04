@@ -16,9 +16,8 @@ OUT_PATH   = os.path.join(SCRIPT_DIR, "..", "datasets", "faq", "kia_ev_faq.json"
 
 
 def make_driver():
-    """기본 크롬 드라이버 (Options 없이)."""
-    service = Service()  # Selenium Manager가 드라이버 자동 관리
-    driver = webdriver.Chrome(service=service)  # <- options 인자 없음
+    service = Service()
+    driver = webdriver.Chrome(service=service)
     driver.set_page_load_timeout(30)
     return driver
 
@@ -29,7 +28,7 @@ def main():
     driver = make_driver()
     try:
         driver.get(URL)
-        time.sleep(1.0)  # 간단 대기 (chevrolet_faq_scraper.py와 동일)
+        time.sleep(1.0)
 
         # 질문/답변 요소가 로드될 때까지 기다림
         WebDriverWait(driver, 10).until(
@@ -49,7 +48,7 @@ def main():
             question = (q_elems[i].text or "").strip()
             answer_html_raw = a_elems[i].get_attribute("innerHTML") or ""
             
-            # HTML 태그와 개행문자 등을 제거하고 공백을 정규화합니다.
+            # HTML 태그와 개행문자 등을 제거하고 공백 정규화
             text_without_html = re.sub(r'<[^>]+>', '', answer_html_raw)
             cleaned_answer = re.sub(r'\s+', ' ', text_without_html).strip()
             

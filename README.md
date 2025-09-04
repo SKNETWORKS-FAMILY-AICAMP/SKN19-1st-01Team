@@ -84,19 +84,19 @@
 
 ## 4. WBS 🛠
 
-<img width="1786" height="714" alt="SKN-1ST-4TEAM" src="https://github.com/user-attachments/assets/019fe2cf-743e-4025-a441-b6eed28ebbdf" />
+<img width="1000" alt="SKN-1ST-4TEAM" src="https://github.com/user-attachments/assets/019fe2cf-743e-4025-a441-b6eed28ebbdf" />
 
 ---
 
 ## 5. 요구사항 명세서 🛠
 
-<img width="1373" height="730" alt="SKN-1ST-4TEAM (1)" src="https://github.com/user-attachments/assets/5cfe9ba4-b112-4f48-bc4e-a1528d77ae61" />
+<img width="1000" alt="SKN-1ST-4TEAM (1)" src="https://github.com/user-attachments/assets/5cfe9ba4-b112-4f48-bc4e-a1528d77ae61" />
 
 ---
 
 ## 6. ERD 🛠
 
-- (여기에 이미지 삽입)
+<img width="600" alt="Image" src="https://github.com/user-attachments/assets/50a5f133-92d2-4be2-843a-00fd09846380" />
 
 ---
 
